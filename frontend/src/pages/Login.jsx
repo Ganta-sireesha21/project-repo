@@ -1,10 +1,12 @@
 import axios from "axios"
 import { useState, useContext  } from "react"
 import { AuthContext } from "../context/AuthContext"
+import { useNavigate } from "react-router-dom"
 export default function Login() {
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
     const {login} = useContext(AuthContext)
+    const navigate = useNavigate()
     const handleLogin = async()=> {
         const res = await axios.post(
             "http://localhost:5000/api/auth/login",
@@ -12,6 +14,7 @@ export default function Login() {
 
         )
         login(res.data.token)
+        navigate("/dashboard")
     }
     return (
         <div>
